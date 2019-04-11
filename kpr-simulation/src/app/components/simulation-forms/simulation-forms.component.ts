@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Model } from 'src/app/kpr';
+import { Model, Kpr } from 'src/app/kpr';
 import { Title } from '@angular/platform-browser';
 import { KprService } from 'src/app/services/kpr.service';
 
@@ -11,7 +11,7 @@ import { KprService } from 'src/app/services/kpr.service';
 })
 export class SimulationFormsComponent implements OnInit {
 
-  models: Model[];
+  kprs: Kpr[];
 
   dp = [0, 10, 20];
   tenor = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
@@ -59,8 +59,9 @@ export class SimulationFormsComponent implements OnInit {
   // }
 
   send(obj){
-    var kprJSON = JSON.stringify(obj);
-    this.kprService.addKpr(kprJSON).subscribe(kpr => this.kprService.push(kpr));
+    const kprJSON = JSON.stringify(obj);
+    this.kprService.addKpr(kprJSON)
+      .subscribe(hero => this.kprs.push(hero));
     return this.data = kprJSON;
 
   }

@@ -19,8 +19,8 @@ const httpOptions = {
 })
 export class KprService {
 
-  private resUrl = 'api/res'; // URL to web api
-  private kprUrl = 'api/kpr';
+  private resUrl = 'http://localhost:8080/api/record'; // URL to web api
+  private kprUrl = 'http://localhost:8080/api/record';
 
   constructor(
     private http: HttpClient,
@@ -29,15 +29,15 @@ export class KprService {
 
 
   private log(message: string) {
-    this.messageService.add('KprService: ${message}');
+    this.messageService.add(`KprService: ${message}`);
   }
 
   // Pushing data to backend for further processing
 
-  addKpr(kpr: Kpr): Observable<Kpr> {
+  addKpr(kpr): Observable<Kpr> {
     return this.http.post<Kpr>(this.kprUrl, kpr, httpOptions).pipe(
-      tap((newKpr: Kpr) => this.log(`added Kpr parameter with id=${newKpr.id}`)),
-      catchError(this.handleError<Kpr>('addKpr', kpr))
+      tap((newKpr: Kpr) => this.log(`added Kpr parameter with id=${kpr.id}`)),
+      catchError(this.handleError<Kpr>('addKpr'))
     );
   }
 
