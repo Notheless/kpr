@@ -22,10 +22,10 @@ namespace kalkulatorKPR.Controllers
         {
 
             _context = context;
-
-            if (_context.CommandRecords.Count() == 0)
+            context.Database.EnsureCreated();
+            if (context.CommandRecords.Any())
             {
-                _context.SaveChanges();
+                return;
             }
         }
 
@@ -40,11 +40,11 @@ namespace kalkulatorKPR.Controllers
         {
             _context.CommandRecords.Add(item);
             await _context.SaveChangesAsync();
-            int lastIdKPR = _context.CommandRecords.Max(x => x.Id);
+            int lastIdKPR = _context.CommandRecords.Max(x => x.IdKPR);
 
             ProsesData(item.Tenor,item.Bunga,item.Harga,item.Pokok,item.Dp, lastIdKPR).GetAwaiter().GetResult();
 
-            return CreatedAtAction(nameof(GetCommandRecords), new { id = item.Id }, item);
+            return CreatedAtAction(nameof(GetCommandRecords), new { id = item.IdKPR }, item);
         }
 
 

@@ -15,5 +15,7 @@ namespace kalkulatorKPR.Models
         public double PembayaranPokok { get; set; }
         public double Angsuran { get; set; }
         public double Sisa { get; set; }
+
+        public CommandRecord CommandRecord { get; set; }
     }
 }
