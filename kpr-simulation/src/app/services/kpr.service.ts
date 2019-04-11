@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { MessageService } from '../services/message.service';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 import { Res } from '../result-kpr';
 import { Kpr } from '../kpr';
@@ -10,7 +10,7 @@ import { Kpr } from '../kpr';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':'application/json',
-    'Authorization': 'my-auth-token'
+    // 'Authorization': 'my-auth-token'
   })
 };
 
@@ -26,6 +26,7 @@ export class KprService {
     private http: HttpClient,
     private messageService: MessageService
   ) { }
+
 
   private log(message: string) {
     this.messageService.add('KprService: ${message}');

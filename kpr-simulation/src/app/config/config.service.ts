@@ -6,7 +6,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 export interface Config {
-  heroesUrl: string;
+  kprUrl: string;
   textfile: string;
 }
 
@@ -69,3 +69,4 @@ export class ConfigService {
   }
 
 }
+

@@ -1,4 +1,4 @@
-export class Kpr {
+export class Model {
 
   constructor(
     public id: number,
@@ -9,3 +9,13 @@ export class Kpr {
     public bunga: number
   ) {}
 }
+
+export interface Kpr {
+  id: number,
+  harga: number,
+  dp: number,
+  pokok: number,
+  tenor: number,
+  bunga: number
+}
+

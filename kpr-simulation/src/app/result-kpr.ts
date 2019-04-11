@@ -1,12 +1,12 @@
-export class Res {
+export interface Res {
 
-  constructor(
-    public id: number,
-    public bulan: number,
-    public pokok: number,
-    public bunga: number,
-    public cicilan: number,
-    public total: number,
-    public sisa: number
-  ) {}
+
+  id: number,
+  bulan: number,
+  pokok: number,
+  bunga: number,
+  cicilan: number,
+  total: number,
+  sisa: number
+
 }

@@ -12,7 +12,7 @@
         <th>Sisa Pokok Pembayaran</th>
       </tr>
     </thead>
-    <tr>
+    <tr *ngFor = "let res of res">
         <td>{{res.bulan}}</td>
         <td>{{res.pokok}}</td>
         <td>{{res.bunga}}</td>
