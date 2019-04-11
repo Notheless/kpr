@@ -19,8 +19,7 @@ const httpOptions = {
 })
 export class KprService {
 
-  private resUrl = 'http://localhost:8080/api/record'; // URL to web api
-  private kprUrl = 'http://localhost:8080/api/record';
+  private kprUrl = 'http://localhost:8080/api/record'; // URL to web api
 
   constructor(
     private http: HttpClient,
@@ -36,7 +35,7 @@ export class KprService {
 
   addKpr(kpr): Observable<Kpr> {
     return this.http.post<Kpr>(this.kprUrl, kpr, httpOptions).pipe(
-      tap((newKpr: Kpr) => this.log(`added Kpr parameter with id=${kpr.id}`)),
+      tap((newKpr: Kpr) => this.log(`added Kpr parameter with id=${newKpr.id}`)),
       catchError(this.handleError<Kpr>('addKpr'))
     );
   }
@@ -44,13 +43,13 @@ export class KprService {
   // Pulling the calculation result of the KPR
 
   getRes(): Observable<Res[]> {
-    return this.http.get<Res[]>(this.resUrl).pipe(tap(_ => this.log('fetched result')),
+    return this.http.get<Res[]>(this.kprUrl).pipe(tap(_ => this.log('fetched result')),
       catchError(this.handleError<Res[]>('getRes', []))
     );
   }
 
   getOneRes(id: number): Observable<Res> {
-    const url = `${this.resUrl}/${id}`;
+    const url = `${this.kprUrl}/${id}`;
     return this.http.get<Res>(url).pipe(
       tap(_ => this.log(`fetched result id=${id}`)),
       catchError(this.handleError<Res>(`getOneRes id=${id}`))
