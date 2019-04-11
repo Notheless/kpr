@@ -1,0 +1,56 @@
+{{setTitle("KPR Simulator")}}
+
+<div class="container">
+  <h1>KPR Simulator</h1>
+  <form (ngSubmit) = "onSimulate()" #simulatorForm="ngForm">
+    <div class="form-group mt-5">
+      <label for="harga">Harga Properti</label>
+      <!-- <div class="form-inline"> -->
+        <!-- <div class="form-control">Rp.</div> -->
+        <input type="text" class="form-control"
+          id="harga" required pattern="^[0-9]*$" minlength="8"
+          [(ngModel)]="model.harga" name="harga" #harga="ngModel">
+        <!-- </div> -->
+        <div *ngIf="harga.invalid && (harga.dirty || harga.touched)"
+          class="alert alert-danger">
+          <div *ngIf=harga.errors.required>Harga properti wajib diisi</div>
+          <div *ngIf=harga.errors.pattern>Nilai tidak valid. Harap masukkan angka</div>
+          <div *ngIf=harga.errors.minlength>Masukan setidaknya 8 digit angka</div>
+        </div>
+
+      <label for="dp" class="mt-3">DP</label>
+      <!-- <div class="form-inline"> -->
+        <select class="form-control" id="dp" required [(ngModel)]="model.dp" name="dp">
+          <option *ngFor="let dp of dp" [value]="dp">{{dp + '%'}}</option>
+        </select>
+        <input type="text" disabled class="form-control" [value]="'Rp. ' + calDP(harga.value, model.dp)">
+      <!-- </div> -->
+
+      <hr>
+
+      <label for="pokok" class="mt-3">Pembayaran Pokok</label>
+      <input type="text" disabled class="form-control" [value]="calPokok(harga.value, dpRp)">
+
+      <label for="tenor" class="mt-3">Tenor</label>
+      <select class="form-control mr-2" id="tenor" required [(ngModel)]="model.tenor" name="tenor">
+        <option *ngFor="let tenor of tenor" [value]="tenor">{{tenor + ' Tahun'}}</option>
+      </select>
+      <label for="bunga" class="mt-3">Bunga</label>
+      <select class="form-control" id="bunga" required [(ngModel)]="model.bunga" name="bunga">
+        <option *ngFor="let bunga of bunga" [value]="bunga">{{bunga + '%'}}</option>
+      </select>
+
+      <button type="submit" class="btn btn-primary mt-5" [disabled]="!simulatorForm.form.valid">Simulate</button>
+
+      <button type="button" class="btn btn-secondary mt-5 ml-3" (click)="resetKpr(); simulatorForm.reset()">Reset</button>
+    </div>
+
+    <div [hidden]="!simulated">
+        <hr>
+        <app-simulation-result></app-simulation-result>
+    </div>
+
+  </form>
+</div>
+
+
