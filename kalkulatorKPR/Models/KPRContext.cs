@@ -10,6 +10,11 @@ namespace kalkulatorKPR.Models
 
         public DbSet<DataRecord> DataRecords { get; set; }
         public DbSet<CommandRecord> CommandRecords { get; set; }
-
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<DataRecord>().ToTable("DataRecord").HasKey(c => new { c.IdKPR });
+            modelBuilder.Entity<CommandRecord>().ToTable("CommandRecord");
+        }
     }
 }
