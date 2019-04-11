@@ -26,11 +26,11 @@ namespace kalkulatorKPR.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<DataRecord>>> GetTodoItem(long id)
+        public async Task<ActionResult<IEnumerable<DataRecord>>> GetDataRecords(long id)
         {
             var todoItem = await _context.DataRecords.Where(i=>i.IdKPR==id).ToListAsync();
 
-            if (todoItem == null)
+            if (todoItem.Count() == 0)
             {
                 return NotFound();
             }
@@ -39,14 +39,14 @@ namespace kalkulatorKPR.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<DataRecord>> PostCommandRecords(DataRecord item)
+        public async Task<ActionResult<DataRecord>> PostDataRecords(DataRecord item)
         {
             _context.DataRecords.Add(item);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetCommandRecords), new { id = item.Id }, item);
         }
-        
+
     }
     
 }

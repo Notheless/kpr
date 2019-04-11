@@ -36,7 +36,7 @@ namespace kalkulatorKPR.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult<CommandRecord>> PostTodoItem(CommandRecord item)
+        public async Task<ActionResult<CommandRecord>> PostCommandRecords(CommandRecord item)
         {
             _context.CommandRecords.Add(item);
             await _context.SaveChangesAsync();
@@ -47,15 +47,35 @@ namespace kalkulatorKPR.Controllers
             return CreatedAtAction(nameof(GetCommandRecords), new { id = item.IdKPR }, item);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCommandRecords(int id)
+        {
+            var deleteCommand = await _context.CommandRecords.FindAsync(id);
+
+            if (deleteCommand == null)
+            {
+                return NotFound();
+            }
+
+            _context.CommandRecords.Remove(deleteCommand);
+            await _context.SaveChangesAsync();
+
+            var deleteData = await _context.DataRecords.Where(i => i.IdKPR == id).ToListAsync();
+            _context.DataRecords.RemoveRange(deleteData);
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
 
         static async Task ProsesData(int Tenor,double Bunga, double Harga, double Pokok, double Dp, int Id)
         {
-
-            
             double bunga = Bunga;
             double jumlah = Pokok;
             int jankaWaktu = Tenor;
             int sisaDurasi;
+
             bunga /= 1200;
             jankaWaktu *= 12;
             sisaDurasi = jankaWaktu;
@@ -102,7 +122,7 @@ namespace kalkulatorKPR.Controllers
                     Angsuran = totalBulanan,
                     Sisa = sisaBulanan
                 };
-                var url = await CreateProductAsync(record);
+                var url = await CreateData(record);
             }
             catch (Exception e)
             {
@@ -114,7 +134,7 @@ namespace kalkulatorKPR.Controllers
 
 
         //Bikin record baru
-        static async Task<Uri> CreateProductAsync(DataRecord record)
+        static async Task<Uri> CreateData(DataRecord record)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:8080/");
@@ -124,9 +144,9 @@ namespace kalkulatorKPR.Controllers
             HttpResponseMessage response = await client.PostAsJsonAsync(
                 "api/data", record);
             response.EnsureSuccessStatusCode();
-
-            // return URI of the created resource.
+            
             return response.Headers.Location;
         }
+        
     }
 }
