@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-@Injectable() 
+
+@Injectable()
 
 export class AppConfig {
     private _config: { [key: string]: string };

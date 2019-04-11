@@ -29,7 +29,7 @@
       <hr>
 
       <label for="pokok" class="mt-3">Pembayaran Pokok</label>
-      <input type="text" disabled class="form-control" [value]="calPokok(harga.value, dpRp)">
+      <input type="text" disabled class="form-control" #pokokView [value]="calPokok(harga.value, dpRp)">
 
       <label for="tenor" class="mt-3">Tenor</label>
       <select class="form-control mr-2" id="tenor" required [(ngModel)]="model.tenor" name="tenor">
@@ -40,7 +40,7 @@
         <option *ngFor="let bunga of bunga" [value]="bunga">{{bunga + '%'}}</option>
       </select>
 
-      <button type="submit" class="btn btn-primary mt-5" [disabled]="!simulatorForm.form.valid">Simulate</button>
+      <button type="submit" (click)="send(model.harga, model.dp, model.pokok, model.tenor, model.bunga)" class="btn btn-primary mt-5" [disabled]="!simulatorForm.form.valid">Simulate</button>
 
       <button type="button" class="btn btn-secondary mt-5 ml-3" (click)="resetKpr(); simulatorForm.reset()">Reset</button>
     </div>

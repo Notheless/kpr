@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Kpr } from 'src/app/kpr';
 import { Title } from '@angular/platform-browser';
+import { KprService } from 'src/app/services/kpr.service';
 
 @Component({
   selector: 'app-simulation-forms',
   templateUrl: './simulation-forms.component.html',
+  providers: [ KprService ],
   styleUrls: ['./simulation-forms.component.css']
 })
 export class SimulationFormsComponent implements OnInit {
 
+  kprs: Kpr[];
 
   dp = [0, 10, 20];
   tenor = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
@@ -25,7 +28,10 @@ export class SimulationFormsComponent implements OnInit {
   onSimulate() {this.simulated = true;}
 
   get diagnostic() {return JSON.stringify(this.model);}
-  constructor(private titleService: Title) { }
+  constructor(
+    private titleService: Title,
+    private kprService: KprService
+    ) { }
 
   ngOnInit() {
   }
@@ -45,5 +51,10 @@ export class SimulationFormsComponent implements OnInit {
     this.titleService.setTitle(newTitle);
   }
 
-
+  send(harga: number, dp: number, pokok: number, tenor: number, bunga: number) {
+    const newKpr: Kpr = { harga, dp, pokok, tenor, bunga } as Kpr;
+    this.kprService.addKpr(newKpr).subscribe(
+      kpr => this.kprs.push(kpr)
+    );
+  }
 }

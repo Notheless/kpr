@@ -22,6 +22,7 @@ import { SimulationResultComponent } from './components/simulation-result/simula
 import { ReportsComponent } from './components/reports/reports.component';
 import { ReportsDetailComponent } from './components/reports-detail/reports-detail.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { ConfigComponent } from './config/config.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { FooterComponent } from './layout/footer/footer.component';
     SimulationResultComponent,
     ReportsComponent,
     ReportsDetailComponent,
-    FooterComponent
+    FooterComponent,
+    ConfigComponent
   ],
   imports: [
     BrowserModule,
