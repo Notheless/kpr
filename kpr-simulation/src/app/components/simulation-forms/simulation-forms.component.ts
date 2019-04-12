@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Model, Kpr } from 'src/app/kpr';
+import { Model, Kpr, Res } from 'src/app/kpr';
 import { Title } from '@angular/platform-browser';
 import { KprService } from 'src/app/services/kpr.service';
 
@@ -11,6 +11,7 @@ import { KprService } from 'src/app/services/kpr.service';
 })
 export class SimulationFormsComponent implements OnInit {
 
+  ress: Res[];
   kprs: Kpr[];
 
   dp = [0, 10, 20];
@@ -28,13 +29,14 @@ export class SimulationFormsComponent implements OnInit {
   onSimulate() {this.simulated = true;}
 
   get diagnostic() {return JSON.stringify(this.model);}
+  
   constructor(
     private titleService: Title,
     private kprService: KprService
     ) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+      this.getRess();}
 
   calDP(harga, dp) {
     return this.dpRp = (harga * dp / 100);
@@ -64,6 +66,11 @@ export class SimulationFormsComponent implements OnInit {
       .subscribe(hero => this.kprs.push(hero));
     return this.data = kprJSON;
 
+  }
+
+  getRess(): void {
+    this.kprService.getRess()
+      .subscribe(ress => this.ress = ress);
   }
 
 }

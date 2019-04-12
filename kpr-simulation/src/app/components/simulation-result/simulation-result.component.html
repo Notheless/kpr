@@ -1,5 +1,17 @@
 <div class="jumbotron">
-  <button (click)="getResult()" class="btn btn-primary mt-5">Get Data</button>
+  <!-- <button (click)="getRess()" class="btn btn-primary mt-5">Get Data</button> -->
+
+<!--
+  Hey, you want to simulate KPR with this value?
+  <div *ngFor = "let kpr of kprs">
+      {{kpr | json}}
+      </div> -->
+
+  Here, I gave you random result
+  <div *ngFor = "let res of ress">
+  {{res | json}}
+  </div>
+
   <h1 style="text-align: center">Hasil Simulasi</h1>
   <hr class="mt-4 mb-5">
   <table class="table" style="text-align: center">
@@ -13,7 +25,7 @@
         <th>Sisa Pokok Pembayaran</th>
       </tr>
     </thead>
-    <tr *ngFor = "let res of res">
+    <tr *ngFor = "let res of ress">
         <td>{{res.bulan}}</td>
         <td>{{res.pokok}}</td>
         <td>{{res.bunga}}</td>

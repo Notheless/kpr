@@ -10,12 +10,24 @@ export class Model {
   ) {}
 }
 
-export interface Kpr {
-  id: number,
-  harga: number,
-  dp: number,
-  pokok: number,
-  tenor: number,
+export class Kpr {
+  // id: number;
+  harga: number;
+  dp: number;
+  pokok: number;
+  tenor: number;
   bunga: number
+}
+
+export class Res {
+
+  id: number;
+  bulan: number;
+  pokok: number;
+  bunga: number;
+  cicilan: number;
+  total: number;
+  sisa: number
+
 }
 
