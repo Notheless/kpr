@@ -16,6 +16,5 @@ namespace kalkulatorKPR.Models
         public double Angsuran { get; set; }
         public double Sisa { get; set; }
 
-        public CommandRecord CommandRecord { get; set; }
     }
 }
