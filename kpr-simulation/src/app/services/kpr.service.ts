@@ -21,7 +21,7 @@ export class KprService {
 
   // private kprUrl = 'api/ress'; // URL to InMemoryDbService
 
-  private kprUrl = 'localhost:8080/api/record'; // URL to Our Web API
+  private kprUrl = 'http://kpr09.azurewebsites.net/api'; // URL to Our Web API
 
   constructor(
     private http: HttpClient,

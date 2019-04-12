@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using kalkulatorKPR.Models;
+using System;
 
 namespace kalkulatorKPR
 {
@@ -21,7 +22,7 @@ namespace kalkulatorKPR
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=KPR;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = Configuration.GetConnectionString("kalkulatorKPRContext");
             services.AddDbContext<KPRContext>
                 (options => options.UseSqlServer(connection));
         }
