@@ -31,6 +31,6 @@ export class SimulationResultComponent implements OnInit {
 
   // getKprs(): void {
   //   this.kprService.getKprs()
-  //     .subscribe(kprs => this.kprs = kprs);
+  //     .subscribe(kprs => this.kprs = JSON.parse(kprs as any));
   // }
 }

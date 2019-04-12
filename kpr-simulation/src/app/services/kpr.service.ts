@@ -19,7 +19,9 @@ const httpOptions = {
 })
 export class KprService {
 
-  private kprUrl = 'http://localhost:8080/api/record'; // URL to web api
+  // private kprUrl = 'api/ress'; // URL to InMemoryDbService
+
+  private kprUrl = 'localhost:8080/api/record'; // URL to Our Web API
 
   constructor(
     private http: HttpClient,

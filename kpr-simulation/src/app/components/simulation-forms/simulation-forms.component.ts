@@ -29,7 +29,7 @@ export class SimulationFormsComponent implements OnInit {
   onSimulate() {this.simulated = true;}
 
   get diagnostic() {return JSON.stringify(this.model);}
-  
+
   constructor(
     private titleService: Title,
     private kprService: KprService
@@ -63,9 +63,8 @@ export class SimulationFormsComponent implements OnInit {
   send(obj){
     const kprJSON = JSON.stringify(obj);
     this.kprService.addKpr(kprJSON)
-      .subscribe(hero => this.kprs.push(hero));
+      .subscribe(kprs => this.kprs.push(kprs));
     return this.data = kprJSON;
-
   }
 
   getRess(): void {
