@@ -19,7 +19,7 @@ const httpOptions = {
 })
 export class KprService {
 
-  private kprUrl = 'api/ress'; // URL to web api
+  private kprUrl = 'http://localhost:8080/api/record'; // URL to web api
 
   constructor(
     private http: HttpClient,
