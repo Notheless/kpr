@@ -4,8 +4,8 @@ import { MessageService } from '../services/message.service';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { Res } from '../result-kpr';
-import { Kpr } from '../kpr';
+// import { Res } from '../result-kpr';
+import { Kpr, Res } from '../kpr';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,7 +19,7 @@ const httpOptions = {
 })
 export class KprService {
 
-  private kprUrl = 'http://localhost:8080/api/record'; // URL to web api
+  private kprUrl = 'api/ress'; // URL to web api
 
   constructor(
     private http: HttpClient,
@@ -35,26 +35,37 @@ export class KprService {
 
   addKpr(kpr): Observable<Kpr> {
     return this.http.post<Kpr>(this.kprUrl, kpr, httpOptions).pipe(
-      tap((newKpr: Kpr) => this.log(`added Kpr parameter with id=${newKpr.id}`)),
+      tap(_ => this.log('added')),
       catchError(this.handleError<Kpr>('addKpr'))
     );
   }
 
   // Pulling the calculation result of the KPR
 
-  getRes(): Observable<Res[]> {
-    return this.http.get<Res[]>(this.kprUrl).pipe(tap(_ => this.log('fetched result')),
-      catchError(this.handleError<Res[]>('getRes', []))
-    );
+  getRess(): Observable<Res[]> {
+    return this.http.get<Res[]>(this.kprUrl)
+      .pipe(tap(_ => this.log('fetched result')), catchError(this.handleError<Res[]>('getRess', [])));
   }
 
-  getOneRes(id: number): Observable<Res> {
-    const url = `${this.kprUrl}/${id}`;
-    return this.http.get<Res>(url).pipe(
-      tap(_ => this.log(`fetched result id=${id}`)),
-      catchError(this.handleError<Res>(`getOneRes id=${id}`))
-    );
-  }
+  // getKprs(): Observable<Kpr[]> {
+  //   return this.http.get<Kpr[]>(this.kprUrl)
+  //     .pipe(tap(_ => this.log('fetched result')), catchError(this.handleError<Kpr[]>('getKprs', [])));
+  // }
+
+
+  // getRes(): Observable<Res[]> {
+  //   return this.http.get<Res[]>(this.kprUrl).pipe(tap(_ => this.log('fetched result')),
+  //     catchError(this.handleError<Res[]>('getRes', []))
+  //   );
+  // }
+
+  // getOneRes(id: number): Observable<Res> {
+  //   const url = `${this.kprUrl}/${id}`;
+  //   return this.http.get<Res>(url).pipe(
+  //     tap(_ => this.log(`fetched result id=${id}`)),
+  //     catchError(this.handleError<Res>(`getOneRes id=${id}`))
+  //   );
+  // }
 
   /**
    * Handle Http operation that failed.
