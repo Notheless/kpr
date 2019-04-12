@@ -19,13 +19,13 @@ export class InMemoryDataService implements InMemoryDbService {
 
     const ress = JSON.stringify(res);
 
-    // const kpr = [
-    //   { harga: 100, dp: 0, pokok: 100, tenor: 1, bunga: 6},
-    // ];
+    const kpr = [
+      { harga: 100, dp: 0, pokok: 100, tenor: 1, bunga: 6},
+    ];
 
-    // const kprs = JSON.stringify(kpr);
+    const kprs = JSON.stringify(kpr);
 
-    return {ress}
+    return {ress, kprs}
   }
 
   // Overrides the genId method to ensure that a hero always has an id.

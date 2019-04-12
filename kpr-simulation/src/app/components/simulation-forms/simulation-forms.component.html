@@ -49,10 +49,13 @@
 
     {{simulatorForm.value | json}}
 
+
     <div [hidden]="!simulated">
         <hr>
-        <app-simulation-result></app-simulation-result>
+        Hey, you want to simulate KPR with this value? This is what I post to you
+        <br>
         {{data}}
+        <app-simulation-result></app-simulation-result>
     </div>
 
 

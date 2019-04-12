@@ -19,7 +19,9 @@ const httpOptions = {
 })
 export class KprService {
 
-  private kprUrl = 'api/ress'; // URL to web api
+  // private kprUrl = 'api/ress'; // URL to InMemoryDbService
+
+  private kprUrl = 'localhost:8080/api/record'; // URL to Our Web API
 
   constructor(
     private http: HttpClient,
@@ -42,15 +44,9 @@ export class KprService {
 
   // Pulling the calculation result of the KPR
 
-  // getRess(): Observable<Res[]> {
-  //   return this.http.get<Res[]>(this.kprUrl)
-  //     .pipe(tap(_ => this.log('fetched result')), catchError(this.handleError<Res[]>('getRess', [])));
-  // }
-
-
-  getRess(): Observable<Kpr[]> {
-    return this.http.get<Kpr[]>(this.kprUrl)
-      .pipe(tap(_ => this.log('fetched result')), catchError(this.handleError<Kpr[]>('getRess', [])));
+  getRess(): Observable<Res[]> {
+    return this.http.get<Res[]>(this.kprUrl)
+      .pipe(tap(_ => this.log('fetched result')), catchError(this.handleError<Res[]>('getRess', [])));
   }
 
   // getKprs(): Observable<Kpr[]> {

@@ -63,19 +63,13 @@ export class SimulationFormsComponent implements OnInit {
   send(obj){
     const kprJSON = JSON.stringify(obj);
     this.kprService.addKpr(kprJSON)
-      .subscribe(hero => this.kprs.push(hero));
+      .subscribe(kprs => this.kprs.push(kprs));
     return this.data = kprJSON;
-
   }
-
-  // getRess(): void {
-  //   this.kprService.getRess()
-  //     .subscribe(ress => this.ress = ress);
-  // }
-
 
   getRess(): void {
     this.kprService.getRess()
-      .subscribe(kprs => this.kprs = kprs);
+      .subscribe(ress => this.ress = ress);
   }
+
 }
