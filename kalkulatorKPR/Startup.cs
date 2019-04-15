@@ -15,6 +15,7 @@ namespace kalkulatorKPR
         {
             Configuration = configuration;
         }
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public IConfiguration Configuration { get; }
 
@@ -25,17 +26,31 @@ namespace kalkulatorKPR
             var connection = Configuration.GetConnectionString("kalkulatorKPRContext");
             services.AddDbContext<KPRContext>
                 (options => options.UseSqlServer(connection));
+
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin();
+                });
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+            // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvc();
+                app.UseCors(MyAllowSpecificOrigins);
+                app.UseHttpsRedirection();
+                app.UseMvc();
         }
     }
 }

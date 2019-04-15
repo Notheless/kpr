@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Model, Kpr, Res } from 'src/app/kpr';
 import { Title } from '@angular/platform-browser';
 import { KprService } from 'src/app/services/kpr.service';
+import { resolveSoa } from 'dns';
 
 @Component({
   selector: 'app-simulation-forms',
@@ -67,7 +68,7 @@ export class SimulationFormsComponent implements OnInit {
     return this.data = kprJSON;
   }
 
-  getRess(): void {
+  getRess() {
     this.kprService.getRess()
       .subscribe(ress => this.ress = ress);
   }

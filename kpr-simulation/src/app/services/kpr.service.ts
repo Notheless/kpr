@@ -10,7 +10,7 @@ import { Kpr, Res } from '../kpr';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':'application/json',
-    // 'Authorization': 'my-auth-token'
+    'Authorization': 'my-auth-token'
   })
 };
 
