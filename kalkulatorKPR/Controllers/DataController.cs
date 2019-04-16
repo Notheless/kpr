@@ -47,6 +47,22 @@ namespace kalkulatorKPR.Controllers
             return CreatedAtAction(nameof(GetCommandRecords), new { id = item.Id }, item);
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> Reset(string args)
+        {
+            if (true)
+            {
+
+                _context.DataRecords.RemoveRange(_context.DataRecords);
+                _context.CommandRecords.RemoveRange(_context.CommandRecords);
+                await _context.SaveChangesAsync();
+
+
+                return NoContent();
+            }
+            return NotFound();
+        }
+
     }
     
 }

@@ -17,6 +17,7 @@ namespace kalkulatorKPR.Controllers
     public class RecordController : ControllerBase
     {
         private readonly KPRContext _context;
+        static List< DataRecord> datarecord;
 
         public RecordController(KPRContext context)
         {
@@ -35,6 +36,13 @@ namespace kalkulatorKPR.Controllers
             return await _context.CommandRecords.ToListAsync();
         }
         
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<CommandRecord>>> Getrecord(long id)
+        {
+            return await _context.CommandRecords.Where(i => i.IdKPR == id).ToListAsync();
+        }
+
         [HttpPost]
         public async Task<ActionResult<CommandRecord>> PostCommandRecords(CommandRecord item)
         {
@@ -50,14 +58,14 @@ namespace kalkulatorKPR.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCommandRecords(int id)
         {
-            var deleteCommand = await _context.CommandRecords.FindAsync(id);
+            var deleteCommand = await _context.CommandRecords.Where(x=>x.IdKPR==id).ToListAsync();
 
-            if (deleteCommand == null)
+            if (deleteCommand.Count() == 0)
             {
                 return NotFound();
             }
 
-            _context.CommandRecords.Remove(deleteCommand);
+            _context.CommandRecords.RemoveRange(deleteCommand);
             await _context.SaveChangesAsync();
 
             var deleteData = await _context.DataRecords.Where(i => i.IdKPR == id).ToListAsync();
@@ -67,10 +75,26 @@ namespace kalkulatorKPR.Controllers
 
             return NoContent();
         }
+        [HttpDelete]
+        public async Task<IActionResult> Reset(string args)
+        {
+            if (true)
+            {
+
+                _context.DataRecords.RemoveRange(_context.DataRecords);
+                _context.CommandRecords.RemoveRange(_context.CommandRecords);
+                await _context.SaveChangesAsync();
+
+
+                return NoContent();
+            }
+            return NotFound();
+        }
 
 
         static async Task ProsesData(int Tenor,double Bunga, double Harga, double Pokok, double Dp, int Id)
         {
+            datarecord = new List<DataRecord>();
             double bunga = Bunga;
             double jumlah = Pokok;
             int jankaWaktu = Tenor;
@@ -112,16 +136,17 @@ namespace kalkulatorKPR.Controllers
 
             try
             {
-                DataRecord record = new DataRecord
+                DataRecord record = new DataRecord()
                 {
                     IdKPR = Id,
                     Bulan = jankaWaktu - sisaDurasi + 1,
                     Pokok = jumlah,
-                    bunga = bunga,
+                    bunga = bungaBulanan,
                     PembayaranPokok = pokokBulanan,
                     Angsuran = totalBulanan,
                     Sisa = sisaBulanan
                 };
+                datarecord.Add(record);
                 var url = await CreateData(record);
             }
             catch (Exception e)
@@ -137,7 +162,7 @@ namespace kalkulatorKPR.Controllers
         static async Task<Uri> CreateData(DataRecord record)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:8080/");
+            client.BaseAddress = new Uri("http://kpr09.azurewebsites.net/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
